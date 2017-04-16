@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="attributeName" class="col-sm-4 control-label">Field Name</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeName" data-ng-model="attributeEditor.attribute.name"
+                       placeholder="Attribute Name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="attributeTitle" class="col-sm-4 control-label">Input Title</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeTitle" data-ng-model="attributeEditor.attribute.title"
+                       placeholder="Attribute Title" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dataType" class="col-sm-4 control-label">Data Type</label>
+
+            <div class="col-sm-8">
+                <select data-ng-model="attributeEditor.attribute.dataType" id="dataType" required
+                        data-ng-options="dataType.name as dataType.value for dataType in attributeEditor.dataTypes">
+                </select>
+            </div>
+
+            <div class="col-sm-offset-4 col-sm-8">
+                <div class="checkbox">
+                    <label class="checkbox-inline"> <input type="checkbox" data-ng-model="attributeEditor.attribute.required">
+                        Required </label>
+                    <label class="checkbox-inline"> <input type="checkbox" data-ng-model="attributeEditor.attribute.array">
+                        Multi-values (Array) </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="attributeMaxSize" class="col-sm-4 control-label">Max value/length allowed:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeMaxSize" data-ng-model="attributeEditor.attribute.max">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="attributeMinSize" class="col-sm-4 control-label">Min value/length allowed:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeMinSize" data-ng-model="attributeEditor.attribute.min">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="attributeRegex" class="col-sm-4 control-label">Regex Validation:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeRegex" data-ng-model="attributeEditor.attribute.regex">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="attributeInList" class="col-sm-4 control-label">Allowed values:<br/>
+                <small>(comma separated)</small>
+            </label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="attributeInList"
+                       data-ng-model="attributeEditor.attribute.inList">
+            </div>
+        </div>
+
+    </div>
+</div>

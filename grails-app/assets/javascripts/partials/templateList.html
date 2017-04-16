@@ -1,0 +1,24 @@
+<div class="page-header"></div>
+<div class="page-header">
+    <h1>Template List</h1>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Model</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="template in templateList.templates">
+        <td>{{template.id}}</td>
+        <td>
+            <a ui-sref="template.create({id: template.id})"> {{template.name}} </a>
+        </td>
+        <td>
+            <a ui-sref="model.create({id: template.model.id})"> {{template.model.name}} </a>
+        </td>
+    </tr>
+    </tbody>
+</table>

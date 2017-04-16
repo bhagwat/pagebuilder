@@ -1,0 +1,46 @@
+<div class="page-header"></div>
+<div class="page-header">
+    <h1 data-ng-show="modelCreate.model.id">Edit Model</h1>
+    <h1 data-ng-hide="modelCreate.model.id">Create Model</h1>
+</div>
+<form class="form-horizontal" name="modelCreateForm">
+    <h2>Model</h2>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="modelName" class="col-sm-4 control-label">Model Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modelName"
+                                   data-ng-model="modelCreate.model.name"
+                                   placeholder="Model Name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <h2>Attributes</h2>
+    <ul class="list-group" data-ng-repeat="attribute in modelCreate.model.attributes"
+        data-ng-if="modelCreate.model && modelCreate.dataTypes && modelCreate.dataTypes.length>0">
+        <li class="list-group-item">
+            <button type="button" class="btn btn-default btn-lg close" aria-label="Close"
+                    data-ng-click="modelCreate.removeAttribute(attribute)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <attribute-editor data-attribute="attribute" data-data-types="modelCreate.dataTypes"></attribute-editor>
+        </li>
+    </ul>
+</form>
+
+<div class="pull-right">
+    <button class="btn btn-default btn-lg" type="button" data-ng-click="modelCreate.addAttribute()">
+        New attribute
+    </button>
+</div>
+<div class="pull-left">
+    <button class="btn btn-default btn-lg" type="button" data-ng-click="modelCreate.save()">
+        Save
+    </button>
+</div>

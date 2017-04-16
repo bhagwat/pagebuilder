@@ -1,0 +1,38 @@
+<div class="page-header"></div>
+<div class="page-header">
+    <h1>Page List</h1>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Template</th>
+        <th>Model</th>
+        <th>Attribute</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="page in pageList.pages">
+        <td>{{page.id}}</td>
+        <td>
+            <a ui-sref="page.create({id: page.id})"> {{page.name}} </a>
+        </td>
+        <td>
+            <a ui-sref="template.create({id: page.template.id})"> {{page.template.name}} </a>
+        </td>
+        <td>
+            <a ui-sref="model.create({id: page.template.model.id})"> {{page.template.model.name}} </a>
+        </td>
+        <td>
+            <table class="table table-condensed">
+                <tr data-ng-repeat="attributeValue in page.attributeValues">
+                    <td>{{attributeValue.id}}</td>
+                    <td>{{attributeValue.name}} ({{attributeValue.dataType}})</td>
+                    <td>{{attributeValue.value}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

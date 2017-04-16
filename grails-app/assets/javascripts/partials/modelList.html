@@ -1,0 +1,30 @@
+<div class="page-header"></div>
+<div class="page-header">
+    <h1>Model List</h1>
+</div>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Attributes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="model in modelList.models">
+        <td>{{model.id}}</td>
+        <td>
+            <a ui-sref="model.create({id: model.id})"> {{model.name}} </a>
+        </td>
+        <td>
+            <table class="table table-condensed">
+                <tr data-ng-repeat="attribute in model.attributes">
+                    <td>{{attribute.id}}</td>
+                    <td>{{attribute.name}}</td>
+                    <td>{{attribute.dataType}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
