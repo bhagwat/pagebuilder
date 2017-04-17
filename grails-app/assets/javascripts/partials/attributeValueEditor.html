@@ -1,0 +1,22 @@
+<div class="col-sm-8" ng-switch on="attributeValueEditor.attribute.dataType">
+    <div ng-switch-when="PLAIN_TEXT">
+        <input type="text" class="form-control" data-ng-model="attributeValueEditor.attributeValue.value">
+    </div>
+    <div ng-switch-when="RICH_TEXT">
+        <textarea id="templateRenderer"
+                  class="form-control" rows="5"
+                  data-ng-model="attributeValueEditor.attributeValue.value"></textarea>
+    </div>
+    <div ng-switch-when="INTEGER|DECIMAL">
+        <input type="number" class="form-control" data-ng-model="attributeValueEditor.attributeValue.value">
+    </div>
+    <div ng-switch-when="BOOLEAN">
+        <input type="checkbox" class="form-control" data-ng-model="attributeValueEditor.attributeValue.value">
+    </div>
+    <div ng-switch-when="PLACEHOLDER">
+        <hr/>
+    </div>
+    <div ng-switch-default>
+        <input type="text" class="form-control" data-ng-model="attributeValueEditor.attributeValue.value">
+    </div>
+</div>

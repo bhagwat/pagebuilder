@@ -1,8 +1,6 @@
-angular.module('pagebuilder', [
-	'ngResource',
-	'ui.router',
-	'ui.bootstrap'
-])
+angular.module('pagebuilder', ['ngResource', 'ui.router', 'ui.bootstrap'])
+	.constant('_', window._)
+
 	.factory('RestApiService', ['$resource', function ($resource) {
 		return {
 			dataType: $resource('/api/v1/dataType/:id', {id: '@id'}),
@@ -11,6 +9,7 @@ angular.module('pagebuilder', [
 			page: $resource('/api/v1/page/:id', {id: '@id'})
 		};
 	}])
+
 	.config(['$locationProvider',
 		function ($locationProvider) {
 			$locationProvider.html5Mode({
@@ -18,6 +17,7 @@ angular.module('pagebuilder', [
 				requireBase: true
 			});
 		}])
+
 	.config(function ($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/model/list');
 		$stateProvider
@@ -46,8 +46,11 @@ angular.module('pagebuilder', [
 						if ($stateParams.id) {
 							return RestApiService.page.get({id: $stateParams.id});
 						} else {
-							return {};
+							return {template: {}};
 						}
+					}],
+					templates: ['RestApiService', function (RestApiService) {
+						return RestApiService.template.query({short: true});
 					}]
 				}
 			})
@@ -118,10 +121,12 @@ angular.module('pagebuilder', [
 				}
 			})
 	})
+
 	.controller('ModelListController', ['models', function (models) {
 		var vm = this;
 		vm.models = models;
 	}])
+
 	.controller('ModelCreateController',
 		['RestApiService', 'dataTypes', 'model', function (RestApiService, dataTypes, model) {
 			var vm = this;
@@ -144,15 +149,6 @@ angular.module('pagebuilder', [
 				RestApiService.model.save(vm.model);
 			}
 		}])
-	.controller('PageListController', ['pages', function (pages) {
-		var vm = this;
-		vm.pages = pages;
-	}])
-
-	.controller('PageCreateController', ['RestApiService', 'page', function (RestApiService, page) {
-		var vm = this;
-		vm.page = page;
-	}])
 
 	.controller('TemplateListController', ['templates', function (templates) {
 		var vm = this;
@@ -169,6 +165,51 @@ angular.module('pagebuilder', [
 			}
 		}])
 
+	.controller('PageListController', ['pages', function (pages) {
+		var vm = this;
+		vm.pages = pages;
+	}])
+
+	.controller('PageCreateController', ['RestApiService', 'page', 'templates',
+		function (RestApiService, page, templates) {
+			var vm = this;
+			vm.page = page;
+			vm.page.attributeValues = vm.page.attributeValues || [];
+			vm.page.tempalate = vm.page.tempalate || {model: {}};
+			vm.templates = templates;
+
+			vm.fetchModel = function () {
+				RestApiService.model.get({id: vm.page.template.model.id}, function (model) {
+					vm.page.template.model = model;
+					prepareAttributeValues();
+				})
+			};
+
+			vm.save = function () {
+				RestApiService.page.save(vm.page);
+			};
+
+			function prepareAttributeValues() {
+				var newOrderedAttributeValues = [];
+				angular.forEach(vm.page.template.model.attributes, function (attribute) {
+					var attributeValue = _.find(vm.page.attributeValues, function (av) {
+						return av.attribute.id === attribute.id;
+					});
+					newOrderedAttributeValues.push(attributeValue || {attribute: attribute});
+				});
+				vm.page.attributeValues = newOrderedAttributeValues;
+			}
+
+			if (vm.page && vm.page.template && vm.page.template.model) {
+				prepareAttributeValues();
+			}
+		}])
+
+	.component('navigationBar', {
+		templateUrl: '/assets/partials/navbar.html',
+		replace: true
+	})
+
 	.component('attributeEditor', {
 		templateUrl: '/assets/partials/attributeEditor.html',
 		controller: [function () {
@@ -178,6 +219,18 @@ angular.module('pagebuilder', [
 		bindings: {
 			attribute: '=',
 			dataTypes: '<'
+		}
+	})
+
+	.component('attributeValueEditor', {
+		templateUrl: '/assets/partials/attributeValueEditor.html',
+		controller: [function () {
+			var vm = this;
+		}],
+		controllerAs: 'attributeValueEditor',
+		bindings: {
+			attributeValue: '=',
+			attribute: '<'
 		}
 	});
 

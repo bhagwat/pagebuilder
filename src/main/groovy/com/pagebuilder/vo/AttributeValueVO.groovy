@@ -9,6 +9,7 @@ class AttributeValueVO {
     String title
     DataType dataType
     String value
+    AttributeShortVO attribute
 
     AttributeValueVO() {
 
@@ -20,5 +21,6 @@ class AttributeValueVO {
         this.name = attributeValue.attribute.name
         this.title = attributeValue.attribute.title
         this.dataType = attributeValue.attribute.dataType
+        this.attribute = new AttributeShortVO(attributeValue.attribute)
     }
 }

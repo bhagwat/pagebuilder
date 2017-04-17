@@ -12,6 +12,7 @@ public class EnumMarshaller implements ObjectMarshaller<JSON> {
         return object.getClass().isEnum();
     }
 
+    @SuppressWarnings("Class<?> cast null value")
     public void marshalObject(Object obj, JSON json) throws ConverterException {
         try {
             Method nameMethod = BeanUtils.findDeclaredMethod(obj.getClass(), "name", null);

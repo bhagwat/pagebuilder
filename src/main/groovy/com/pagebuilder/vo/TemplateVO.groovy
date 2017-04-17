@@ -5,8 +5,7 @@ import com.pagebuilder.Template
 class TemplateVO {
     Long id
     String name
-    String renderer
-    ModelDetailedVO model
+    ModelVO model
 
     TemplateVO() {
 
@@ -15,7 +14,6 @@ class TemplateVO {
     TemplateVO(Template template) {
         this.id = template.id
         this.name = template.name
-        this.renderer = template.renderer
-        this.model = new ModelDetailedVO(template.model)
+        this.model = new ModelVO(template.model)
     }
 }

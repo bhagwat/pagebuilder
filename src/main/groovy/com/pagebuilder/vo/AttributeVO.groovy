@@ -3,10 +3,7 @@ package com.pagebuilder.vo
 import com.pagebuilder.Attribute
 import com.pagebuilder.DataType
 
-class AttributeVO {
-    Long id
-    String name
-    String title
+class AttributeVO extends AttributeShortVO {
     DataType dataType
     Boolean array
     Boolean required
@@ -21,9 +18,7 @@ class AttributeVO {
     }
 
     AttributeVO(Attribute attribute) {
-        this.id = attribute.id
-        this.name = attribute.name
-        this.title = attribute.title
+        super(attribute)
         this.dataType = attribute.dataType
         this.array = attribute.array
         this.required = attribute.required

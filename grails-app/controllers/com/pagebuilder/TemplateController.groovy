@@ -1,6 +1,7 @@
 package com.pagebuilder
 
 import com.pagebuilder.co.TemplateCO
+import com.pagebuilder.vo.TemplateDetailedVO
 import com.pagebuilder.vo.TemplateVO
 
 import java.util.stream.Collectors
@@ -18,10 +19,14 @@ class TemplateController {
     def index() {
         if (params.long('id')) {
             Template template = templateService.getById(params.long('id'))
-            respond new TemplateVO(template)
+            respond new TemplateDetailedVO(template)
         } else {
+            Boolean shortVersion = params.boolean('short')
             List<Template> templates = templateService.list()
-            respond templates.stream().map { new TemplateVO(it) }.collect(Collectors.toList())
+            respond templates.stream().map {
+                shortVersion ? new TemplateVO(it) : new TemplateDetailedVO(it)
+            }
+            .collect(Collectors.toList())
         }
     }
 
